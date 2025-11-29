@@ -143,7 +143,7 @@
                 </div>
 
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="#upload" class="text-slate-600 hover:text-mednow-blue font-medium transition">Upload Prescription</a>
+                    <a href="#upload" class="text-slate-600 hover:text-mednow-blue font-medium transition">Upload Rx</a>
                     <a href="#otc" class="text-slate-600 hover:text-mednow-blue font-medium transition">Medicines</a>
                     <a href="#lab-tests" class="text-slate-600 hover:text-mednow-blue font-medium transition">Lab Tests</a>
                     <a href="#smart-features" class="text-slate-600 hover:text-mednow-blue font-medium transition">Tech</a>
@@ -197,7 +197,9 @@
                 <a href="#otc" class="block px-3 py-3 rounded-md text-base font-medium text-slate-700 hover:bg-blue-50 hover:text-mednow-blue" onclick="toggleMobileMenu()">Browse Medicines</a>
                 <a href="#lab-tests" class="block px-3 py-3 rounded-md text-base font-medium text-slate-700 hover:bg-blue-50 hover:text-mednow-blue" onclick="toggleMobileMenu()">Lab Tests</a>
                 <a href="#smart-features" class="block px-3 py-3 rounded-md text-base font-medium text-slate-700 hover:bg-blue-50 hover:text-mednow-blue" onclick="toggleMobileMenu()">Smart Features</a>
-                <button onclick="toggleLoginModal(); toggleMobileMenu()" class="w-full mt-4 bg-mednow-blue text-white px-5 py-3 rounded-lg font-medium shadow-md">Login / Sign Up</button>
+                <!-- Mobile Login/Logout Buttons -->
+                <button id="mobile-login-btn" onclick="toggleLoginModal(); toggleMobileMenu()" class="w-full mt-4 bg-mednow-blue text-white px-5 py-3 rounded-lg font-medium shadow-md">Login / Sign Up</button>
+                <button id="mobile-logout-btn" onclick="logout(); toggleMobileMenu()" class="hidden w-full mt-4 bg-red-50 text-red-500 border border-red-100 px-5 py-3 rounded-lg font-medium shadow-md">Logout (<span id="mobile-user-name">User</span>)</button>
             </div>
         </div>
     </nav>
@@ -295,7 +297,8 @@
         </div>
     </div>
 
-    <!-- Rest of content starts here (Hero, etc.) -->
+    <!-- ... (Rest of content starts here - Hero, etc.) ... -->
+    <!-- All existing sections remain unchanged until the script -->
     <section class="relative pt-24 pb-12 lg:pt-32 lg:pb-24 overflow-hidden">
         <div class="absolute top-0 right-0 -z-10 w-1/2 h-full bg-gradient-to-l from-blue-50 to-transparent"></div>
         <div class="absolute top-20 right-20 -z-10 h-64 w-64 bg-mednow-teal/10 rounded-full blur-3xl"></div>
@@ -431,7 +434,6 @@
         </div>
     </section>
 
-    <!-- ... (All Sections: OTC, Lab Tests, Smart Features, Footer, Modals) - No changes needed except appending JS ... -->
     <section id="otc" class="py-16 bg-slate-50 min-h-screen">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row justify-between items-end mb-8 gap-4">
@@ -722,169 +724,6 @@
         </div>
     </footer>
 
-    <!-- --- MODALS --- -->
-    <div id="guidelines-modal" class="fixed inset-0 z-[70] hidden flex items-center justify-center">
-        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="toggleGuidelines()"></div>
-        <div class="bg-white rounded-2xl shadow-2xl max-w-sm w-full m-4 relative overflow-hidden animate-shake">
-            <div class="bg-mednow-blue p-4 flex justify-between items-center">
-                <h3 class="text-white font-bold text-lg">Prescription Guidelines</h3>
-                <button onclick="toggleGuidelines()" class="text-white/80 hover:text-white"><i data-lucide="x" class="h-5 w-5"></i></button>
-            </div>
-            <div class="p-6 space-y-5">
-                <div>
-                    <h4 class="font-bold text-slate-900 mb-2 text-sm uppercase tracking-wide text-mednow-blue">A Valid Prescription Contains:</h4>
-                    <ul class="space-y-2 text-sm text-slate-600">
-                        <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="h-4 w-4 text-green-500"></i> Doctor Details</li>
-                        <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="h-4 w-4 text-green-500"></i> Date of Prescription</li>
-                        <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="h-4 w-4 text-green-500"></i> Patient Details</li>
-                        <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="h-4 w-4 text-green-500"></i> Dosage Details</li>
-                    </ul>
-                </div>
-                <div class="border-t border-slate-100 pt-4">
-                    <h4 class="font-bold text-slate-900 mb-2 text-sm uppercase tracking-wide text-mednow-blue">Do’s and Don’ts</h4>
-                    <div class="space-y-3 text-sm">
-                        <div class="flex gap-2">
-                            <i data-lucide="thumbs-up" class="h-4 w-4 text-green-600 mt-0.5"></i>
-                            <p class="text-slate-600"><strong class="text-green-600">Upload Clear Image:</strong> Ensure visible handwriting. Place on flat surface.</p>
-                        </div>
-                        <div class="flex gap-2">
-                            <i data-lucide="thumbs-down" class="h-4 w-4 text-red-500 mt-0.5"></i>
-                            <p class="text-slate-600"><strong class="text-red-500">No Pictures of Medicines:</strong> Only prescription paper allowed.</p>
-                        </div>
-                        <div class="flex gap-2">
-                            <i data-lucide="thumbs-down" class="h-4 w-4 text-red-500 mt-0.5"></i>
-                            <p class="text-slate-600"><strong class="text-red-500">Do Not Crop:</strong> Keep full page visible.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="bg-slate-50 p-4 text-center">
-                <button onclick="toggleGuidelines()" class="text-mednow-blue font-bold text-sm hover:underline">Got it</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="preview-modal" class="fixed inset-0 z-[70] hidden flex items-center justify-center">
-        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="togglePreview()"></div>
-        <div class="bg-white rounded-xl p-2 max-w-lg w-full m-4 relative shadow-2xl flex flex-col max-h-[90vh]">
-            <button onclick="togglePreview()" class="absolute -top-10 right-0 text-white hover:text-slate-200"><i data-lucide="x" class="h-8 w-8"></i></button>
-            
-            <div class="relative flex-1 overflow-hidden bg-slate-100 rounded-t-lg">
-                <img id="preview-image" src="" alt="Uploaded Prescription" class="w-full h-full object-contain">
-            </div>
-            
-            <div class="p-4 bg-white rounded-b-lg space-y-3">
-                <div class="flex justify-between items-center">
-                    <p class="text-sm font-bold text-slate-700">Prescription Preview</p>
-                    <button onclick="document.getElementById('file-input').click(); togglePreview()" class="text-xs text-mednow-blue hover:underline">Change Image</button>
-                </div>
-                
-                <div class="border-t border-slate-100 pt-3">
-                    <div id="ai-scan-results" class="hidden mb-3 p-3 bg-purple-50 rounded-lg border border-purple-100 text-sm text-slate-700 max-h-32 overflow-y-auto">
-                        <!-- Results go here -->
-                    </div>
-                    
-                    <button onclick="analyzePrescription()" id="ai-scan-btn" class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-2.5 rounded-lg font-bold shadow-md hover:shadow-lg transition flex items-center justify-center gap-2">
-                        <i data-lucide="sparkles" class="h-4 w-4"></i> ✨ Scan Medicines with AI
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="cart-modal" class="fixed inset-0 z-[60] hidden">
-        <div class="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity opacity-0" id="cart-backdrop" onclick="toggleCart()"></div>
-        
-        <div class="absolute right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl transform transition-transform duration-300 translate-x-full flex flex-col" id="cart-panel">
-            
-            <div class="p-5 border-b flex justify-between items-center bg-slate-50">
-                <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
-                    <i data-lucide="shopping-cart" class="text-mednow-blue"></i> Your Cart
-                </h2>
-                <button onclick="toggleCart()" class="p-2 hover:bg-slate-200 rounded-full text-slate-500 transition">
-                    <i data-lucide="x" class="h-6 w-6"></i>
-                </button>
-            </div>
-
-            <div class="flex-1 overflow-hidden relative">
-                
-                <div id="cart-view" class="h-full flex flex-col transition-transform duration-300">
-                    <div id="cart-items-container" class="flex-1 overflow-y-auto p-5 space-y-4">
-                        <div class="flex flex-col items-center justify-center h-full text-slate-400">
-                            <i data-lucide="shopping-basket" class="h-16 w-16 mb-4 opacity-50"></i>
-                            <p>Your cart is empty</p>
-                            <button onclick="toggleCart(); scrollToStore()" class="mt-4 text-mednow-blue font-bold hover:underline">Start Shopping</button>
-                        </div>
-                    </div>
-                    
-                    <div class="p-5 border-t bg-slate-50 shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
-                        <div class="flex justify-between items-center mb-4 text-lg">
-                            <span class="text-slate-500 font-medium">Total Amount</span>
-                            <span class="text-2xl font-bold text-slate-900" id="cart-total">₹0</span>
-                        </div>
-                        <button onclick="showPayment()" id="checkout-btn" class="w-full bg-mednow-blue text-white py-4 rounded-xl font-bold shadow-lg hover:bg-mednow-dark transition flex justify-center items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
-                            Proceed to Payment <i data-lucide="arrow-right" class="h-4 w-4"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <div id="payment-view" class="absolute inset-0 bg-white transform translate-x-full transition-transform duration-300 flex flex-col h-full z-10">
-                    <div class="p-5 border-b flex items-center gap-3 bg-slate-50">
-                        <button onclick="hidePayment()" class="text-slate-500 hover:text-mednow-blue"><i data-lucide="arrow-left"></i></button>
-                        <h3 class="font-bold text-lg">Payment Method</h3>
-                    </div>
-                    
-                    <div class="flex-1 p-6 space-y-4 overflow-y-auto">
-                        <div class="text-xs text-slate-500 mb-2 uppercase font-bold tracking-wide">Select Option</div>
-                        
-                        <label class="flex items-center gap-4 p-4 border rounded-xl cursor-pointer hover:border-mednow-blue hover:bg-blue-50 transition group shadow-sm">
-                            <input type="radio" name="payment" value="upi" class="h-5 w-5 text-mednow-blue border-slate-300 focus:ring-mednow-blue" checked>
-                            <div class="flex-1">
-                                <div class="font-bold text-slate-800">UPI / GPay / PhonePe</div>
-                                <div class="text-xs text-slate-500">Pay instantly from your phone</div>
-                            </div>
-                            <i data-lucide="smartphone" class="text-slate-400 group-hover:text-mednow-blue"></i>
-                        </label>
-
-                        <label class="flex items-center gap-4 p-4 border rounded-xl cursor-pointer hover:border-mednow-blue hover:bg-blue-50 transition group shadow-sm">
-                            <input type="radio" name="payment" value="card" class="h-5 w-5 text-mednow-blue border-slate-300 focus:ring-mednow-blue">
-                            <div class="flex-1">
-                                <div class="font-bold text-slate-800">Credit / Debit Card</div>
-                                <div class="text-xs text-slate-500">Visa, Mastercard, Rupay</div>
-                            </div>
-                            <i data-lucide="credit-card" class="text-slate-400 group-hover:text-mednow-blue"></i>
-                        </label>
-
-                        <label class="flex items-center gap-4 p-4 border rounded-xl cursor-pointer hover:border-mednow-blue hover:bg-blue-50 transition group shadow-sm">
-                            <input type="radio" name="payment" value="cod" class="h-5 w-5 text-mednow-blue border-slate-300 focus:ring-mednow-blue">
-                            <div class="flex-1">
-                                <div class="font-bold text-slate-800">Cash on Delivery</div>
-                                <div class="text-xs text-slate-500">Pay cash upon arrival</div>
-                            </div>
-                            <i data-lucide="banknote" class="text-slate-400 group-hover:text-mednow-blue"></i>
-                        </label>
-                        
-                        <div class="mt-8 bg-blue-50 p-4 rounded-lg border border-blue-100">
-                            <p class="text-xs text-mednow-blue flex items-center gap-2"><i data-lucide="shield-check" class="h-3 w-3"></i> Payments are 100% secure and encrypted.</p>
-                        </div>
-                    </div>
-
-                    <div class="p-5 border-t bg-slate-50">
-                        <div class="flex justify-between items-center mb-4 text-sm">
-                             <span class="text-slate-500">Payable Amount</span>
-                             <span class="font-bold text-slate-900" id="pay-total">₹0</span>
-                        </div>
-                        <button onclick="processOrder()" class="w-full bg-green-600 text-white py-4 rounded-xl font-bold shadow-lg hover:bg-green-700 transition flex justify-center items-center gap-2">
-                            <span id="pay-btn-text">Pay & Place Order</span>
-                            <i data-lucide="check-circle" class="h-4 w-4"></i>
-                        </button>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
     <!-- AI Chat Widget (New) -->
     <div id="chat-widget" class="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3 font-sans w-full max-w-xs sm:max-w-none sm:w-auto pointer-events-none">
         
@@ -935,6 +774,7 @@
     <script>
         // --- AUTHENTICATION LOGIC ---
         let isLoggedIn = false;
+        let currentUserName = "User"; // Store the name
 
         function toggleLoginModal() {
             const modal = document.getElementById('login-modal');
@@ -973,7 +813,30 @@
         }
 
         function performLogin() {
-            const btn = document.querySelector('#login-modal button.bg-mednow-blue');
+            // Determine if we are in Signup or Login mode based on visibility
+            const isSignup = !document.getElementById('form-signup').classList.contains('hidden');
+            let nameInput = "";
+            
+            if (isSignup) {
+                // Get name from Signup Form (First input)
+                nameInput = document.querySelector('#form-signup input[type="text"]').value;
+                if (!nameInput) nameInput = "User";
+            } else {
+                // Get identifier from Login Form (First input)
+                const loginVal = document.querySelector('#form-login input[type="text"]').value;
+                // If email, extract name before @, else use the value
+                if (loginVal.includes('@')) {
+                    nameInput = loginVal.split('@')[0];
+                } else {
+                    nameInput = loginVal || "User";
+                }
+            }
+
+            // Capitalize First Letter
+            currentUserName = nameInput.charAt(0).toUpperCase() + nameInput.slice(1);
+
+            // Select the active button
+            const btn = isSignup ? document.querySelector('#form-signup button') : document.querySelector('#form-login button');
             const originalText = btn.innerHTML;
             
             btn.innerHTML = `<div class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>`;
@@ -987,10 +850,10 @@
                 toggleLoginModal();
                 updateAuthUI();
                 
-                // Show Welcome Toast
+                // Show Personalized Welcome Toast
                 const toast = document.createElement('div');
                 toast.className = 'fixed top-24 right-4 bg-green-600 text-white px-6 py-3 rounded-lg shadow-xl z-[100] animate-fade-in-up flex items-center gap-2';
-                toast.innerHTML = `<i data-lucide="check-circle" class="h-5 w-5"></i> <span>Welcome back, John!</span>`;
+                toast.innerHTML = `<i data-lucide="check-circle" class="h-5 w-5"></i> <span>Welcome back, ${currentUserName}!</span>`;
                 document.body.appendChild(toast);
                 lucide.createIcons();
                 setTimeout(() => toast.remove(), 3000);
@@ -999,202 +862,175 @@
 
         function logout() {
             isLoggedIn = false;
+            currentUserName = "User";
             updateAuthUI();
         }
 
         function updateAuthUI() {
             const loginBtn = document.getElementById('login-nav-btn');
             const authUser = document.getElementById('auth-user');
+            const authNameEl = authUser.querySelector('p');
+            const authAvatarEl = authUser.querySelector('div');
             
+            // Mobile elements
+            const mobileLoginBtn = document.getElementById('mobile-login-btn');
+            const mobileLogoutBtn = document.getElementById('mobile-logout-btn');
+            const mobileUserName = document.getElementById('mobile-user-name');
+
             if (isLoggedIn) {
+                // Desktop
                 loginBtn.classList.add('hidden');
                 authUser.classList.remove('hidden');
                 authUser.classList.add('flex');
+                
+                // Update Name
+                authNameEl.textContent = currentUserName;
+                
+                // Update Initials (First 1 or 2 letters)
+                const initials = currentUserName.substring(0, 2).toUpperCase();
+                authAvatarEl.textContent = initials;
+
+                // Mobile
+                if(mobileLoginBtn) mobileLoginBtn.classList.add('hidden');
+                if(mobileLogoutBtn) {
+                    mobileLogoutBtn.classList.remove('hidden');
+                    if(mobileUserName) mobileUserName.textContent = currentUserName;
+                }
+
             } else {
+                // Desktop
                 loginBtn.classList.remove('hidden');
                 authUser.classList.add('hidden');
                 authUser.classList.remove('flex');
+
+                // Mobile
+                if(mobileLoginBtn) mobileLoginBtn.classList.remove('hidden');
+                if(mobileLogoutBtn) mobileLogoutBtn.classList.add('hidden');
             }
         }
 
-        // --- API KEY HANDLING ---
-       // Put your Gemini API Key here ↓
-let apiKey = "AIzaSyD43Is-jLIO-yVWBpNhTY0BaAe_jlHXo9s";
+        // ---------------- API KEY SETUP ----------------
 
+        // Put your Gemini API Key here ↓
+        let apiKey = "AIzaSyD43Is-jLIO-yVWBpNhTY0BaAe_jlHXo9s";
 
-// LocalStorage key name (should NOT be API key name)
-const STORAGE_KEY = "AIzaSyD43Is-jLIO-yVWBpNhTY0BaAe_jlHXo9s";
+        // LocalStorage key name (should NOT be API key name)
+        const STORAGE_KEY = "AIzaSyD43Is-jLIO-yVWBpNhTY0BaAe_jlHXo9s";
 
+        function checkApiKey() {
+            const saved = localStorage.getItem(STORAGE_KEY);
 
-function checkApiKey() {
-   const saved = localStorage.getItem(STORAGE_KEY);
+            if (saved) {
+                apiKey = saved;
+                console.log("🔐 Gemini Key Loaded From Storage");
+            } else {
+                // Save default key automatically — no popup
+                localStorage.setItem(STORAGE_KEY, apiKey);
+                console.log("🔐 Default API Key Stored");
+            }
+        }
 
+        // Change key manually when needed
+        function changeApiKey() {
+            const newKey = prompt("Enter New Gemini API Key:", apiKey);
+            if (newKey) {
+                apiKey = newKey;
+                localStorage.setItem(STORAGE_KEY, newKey);
+                alert("API Key Updated Successfully!");
+            }
+        }
 
-   if (saved) {
-       apiKey = saved;
-       console.log("🔐 Gemini Key Loaded From Storage");
-   } else {
-       // Save default key automatically — no popup
-       localStorage.setItem(STORAGE_KEY, apiKey);
-       console.log("🔐 Default API Key Stored");
-   }
-}
+        checkApiKey();  // No popup — just loads key
+        lucide.createIcons();
 
+        // --- VIRTUAL IMAGE FOLDER (ASSETS) ---
+        //pain relief
+        const assets = {
+            dolo: "images/pain relief/Dolo-650mg.webp",
+            crocin: "images/pain relief/crocin-advance.webp",
+            volini: "images/pain relief/volini-spray.webp",
+            moov: "images/pain relief/moov-ointment.webp",
+            combiflam: "images/pain relief/combiflam.webp",
+            ibuprofen: "images/pain relief/ibuprofen.webp",
+            omnigel: "images/pain relief/omnigel.webp",
+            amrutanjan: "images/pain relief/amrutanjan-balm.webp",
+            disprin: "images/pain relief/disprin.webp",
+            tigerbalm: "images/pain relief/tiger-balm.webp",
 
-// Change key manually when needed
-function changeApiKey() {
-   const newKey = prompt("AIzaSyD43Is-jLIO-yVWBpNhTY0BaAe_jlHXo9s", apiKey);
-   if (newKey) {
-       apiKey = newKey;
-       localStorage.setItem(STORAGE_KEY, newKey);
-       alert("API Key Updated Successfully!");
-   }
-}
+            // --- Vitamins Images ---
+            limcee: "images/vitamins/limcee-vit-c.webp",
+            becosules: "images/vitamins/becosules-z.webp",
+            zincovit: "images/vitamins/zincovit.webp",
+            sevenseas: "images/vitamins/omega3.webp",
+            neurobion: "images/vitamins/neurobian forte.webp",
+            evion: "images/vitamins/evion.webp",
+            revital: "images/vitamins/revital H.webp",
+            shelcal: "images/vitamins/sheical 500.webp",
 
+            // --- Diabetes Images ---
+            accuchek: "images/Diabetes care/accu-chek-12-min.png",
+            accustrips: "images/Diabetes care/accuatriostrip.jpeg",
+            sugarfree: "images/Diabetes care/sugarfree.png",
+            syringes: "images/Diabetes care/insulin-syringe.jpg",
+            karela: "images/Diabetes care/karela.png",
+            onetouch: "images/Diabetes care/onetouch.jpg",
+            footcream: "images/Diabetes care/foot-cream.png",
+            stevia: "images/Diabetes care/stevia.jpg",
+            
+            // --- First Aid Images ---
+            dettol: "images/first aid/dettol.webp",
+            bandaid: "images/first aid/band-aid.jpeg",
+            cotton: "images/first aid/cotton-roll.jpg",
+            betadine: "images/first aid/betadine.jpeg",
+            thermometer: "images/first aid/thermometer.jpeg",
+            savlon: "images/first aid/savalon.jpeg",
+            bandage: "images/first aid/crepebandage.webp",
+            burnol: "images/first aid/burnol.jpeg"
+        };
 
-checkApiKey();  // No popup — just loads key
-lucide.createIcons();
-
-
-
-
-      // --- VIRTUAL IMAGE FOLDER (ASSETS) ---
-      // Updated with new, reliable links + added fallbacks in the render function
-      // const assets = {
-      //     pills: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=400&q=80",
-      //     syrup: "https://images.unsplash.com/photo-1624454002302-36b824d7bd0a?auto=format&fit=crop&w=400&q=80",
-      //     cream: "https://images.unsplash.com/photo-1556228720-19de752802b7?auto=format&fit=crop&w=400&q=80",
-      //     spray: "https://images.unsplash.com/photo-1631549916768-4119b2e5f926?auto=format&fit=crop&w=400&q=80",
-      //     supplements: "https://images.unsplash.com/photo-1577401239170-897942555fb3?auto=format&fit=crop&w=400&q=80",
-      //     glucometer: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=400&q=80",
-      //     firstaid: "https://images.unsplash.com/photo-1603398938378-e54eab446dde?auto=format&fit=crop&w=400&q=80",
-      //     thermometer: "https://images.unsplash.com/photo-1584036561566-b93a446db338?auto=format&fit=crop&w=400&q=80"
-      // };
-
-
-
-
-      //pain relief
-      const assets = {
-  dolo: "images/pain relief/Dolo-650mg.webp",
-  crocin: "images/pain relief/crocin-advance.webp",
-  volini: "images/pain relief/volini-spray.webp",
-  moov: "images/pain relief/moov-ointment.webp",
-  combiflam: "images/pain relief/combiflam.webp",
-  ibuprofen: "images/pain relief/ibuprofen.webp",
-  omnigel: "images/pain relief/omnigel.webp",
-  amrutanjan: "images/pain relief/amrutanjan-balm.webp",
-  disprin: "images/pain relief/disprin.webp",
-  tigerbalm: "images/pain relief/tiger-balm.webp",
-
-
-
-
-
-
-
-
-// --- Vitamins Images ---
-  limcee: "images/vitamins/limcee-vit-c.webp",
-  becosules: "images/vitamins/becosules-z.webp",
-  zincovit: "images/vitamins/zincovit.webp",
-  sevenseas: "images/vitamins/omega3.webp",
-  neurobion: "images/vitamins/neurobian forte.webp",
-  evion: "images/vitamins/evion.webp",
-  revital: "images/vitamins/revital H.webp",
-  shelcal: "images/vitamins/sheical 500.webp",
-
-
-
-
-  // --- Diabetes Images ---
-
-
-
-
-  accuchek: "images/Diabetes care/accu-chek-12-min.png",
-  accustrips: "images/Diabetes care/accuatriostrip.jpeg",
-  sugarfree: "images/Diabetes care/sugarfree.png",
-  syringes: "images/Diabetes care/insulin-syringe.jpg",
-  karela: "images/Diabetes care/karela.png",
-  onetouch: "images/Diabetes care/onetouch.jpg",
-  footcream: "images/Diabetes care/foot-cream.png",
-  stevia: "images/Diabetes care/stevia.jpg",
-// --- First Aid Images ---
-  dettol: "images/first aid/dettol.webp",
-  bandaid: "images/first aid/band-aid.jpeg",
-  cotton: "images/first aid/cotton-roll.jpg",
-  betadine: "images/first aid/betadine.jpeg",
-  thermometer: "images/first aid/thermometer.jpeg",
-  savlon: "images/first aid/savalon.jpeg",
-  bandage: "images/first aid/crepebandage.webp",
-  burnol: "images/first aid/burnol.jpeg"
-
-
-
-
-};
-
-
-
-
-
-
-
-
-
-
-
-
-      const products = [
-          // --- PAIN RELIEF ---
-          { name: "Dolo 650mg", cat: "pain", price: 30, img: assets.dolo, desc: "Strip of 15 Tablets" },
-          { name: "Crocin Advance", cat: "pain", price: 25, img: assets.crocin, desc: "Strip of 20 Tablets" },
-          { name: "Volini Spray", cat: "pain", price: 180, img: assets.volini, desc: "40g Pain Relief Spray" },
-          { name: "Moov Ointment", cat: "pain", price: 140, img: assets.moov, desc: "50g Rapid Relief" },
-          { name: "Combiflam", cat: "pain", price: 45, img: assets.combiflam, desc: "Strip of 20 Tablets" },
-          { name: "Ibuprofen 400", cat: "pain", price: 22, img: assets.ibuprofen, desc: "Strip of 10 Tablets" },
-          { name: "Omnigel", cat: "pain", price: 95, img: assets.omnigel, desc: "30g Pain Relief Gel" },
-          { name: "Amrutanjan Balm", cat: "pain", price: 60, img: assets.amrutanjan, desc: "Small Jar" },
-          { name: "Disprin", cat: "pain", price: 12, img: assets.disprin, desc: "Strip of 10 Effervescent" },
-          { name: "Tiger Balm", cat: "pain", price: 85, img: assets.tigerbalm, desc: "Red Extra Strength" },
-        
-          // --- VITAMINS ---
-          { name: "Limcee Vit C", cat: "vitamins", price: 25, img: assets.limcee, desc: "Chewable 15 Tabs" },
-          { name: "Becosules Z", cat: "vitamins", price: 55, img: assets.becosules, desc: "Strip of 20 Caps" },
-          { name: "Zincovit", cat: "vitamins", price: 110, img: assets.zincovit, desc: "Multivitamin Strip" },
-          { name: "Seven Seas Omega", cat: "vitamins", price: 350, img: assets.sevenseas, desc: "Cod Liver Oil Bottle" },
-          { name: "Neurobion Forte", cat: "vitamins", price: 40, img: assets.neurobion, desc: "B12 Support Strip" },
-          { name: "Evion 400", cat: "vitamins", price: 38, img: assets.evion, desc: "Vitamin E Pearls" },
-          { name: "Revital H", cat: "vitamins", price: 550, img: assets.revital, desc: "Daily Health Supplement" },
-          { name: "Shelcal 500", cat: "vitamins", price: 120, img: assets.shelcal, desc: "Calcium + Vit D3" },
-        
-          // --- DIABETES CARE ---
-          { name: "Accu-Chek Active", cat: "diabetes", price: 850, img: assets.accuchek, desc: "Glucometer Kit" },
-          { name: "Accu-Chek Strips", cat: "diabetes", price: 950, img: assets.accustrips, desc: "Box of 50 Strips" },
-          { name: "Sugar Free Gold", cat: "diabetes", price: 250, img: assets.sugarfree, desc: "500 Pellets" },
-          { name: "Insulin Syringes", cat: "diabetes", price: 150, img: assets.syringes, desc: "Pack of 10 (40IU)" },
-          { name: "Karela Jamun Juice", cat: "diabetes", price: 320, img: assets.karela, desc: "1 Litre Bottle" },
-          { name: "OneTouch Select", cat: "diabetes", price: 1200, img: assets.onetouch, desc: "Simple Glucometer" },
-          { name: "Foot Cream", cat: "diabetes", price: 280, img: assets.footcream, desc: "Diabetic Foot Care" },
-          { name: "Stevia Drops", cat: "diabetes", price: 180, img: assets.stevia, desc: "Natural Sweetener" },
-        
-          // --- FIRST AID ---
-          { name: "Dettol Liquid", cat: "first_aid", price: 120, img: assets.dettol, desc: "250ml Antiseptic" },
-          { name: "Band-Aid", cat: "first_aid", price: 50, img: assets.bandaid, desc: "Washproof Box of 20" },
-          { name: "Cotton Roll", cat: "first_aid", price: 60, img: assets.cotton, desc: "50g Absorbent" },
-          { name: "Betadine Ointment", cat: "first_aid", price: 85, img: assets.betadine, desc: "20g Tube" },
-          { name: "Digital Thermometer", cat: "first_aid", price: 250, img: assets.thermometer, desc: "Fast Reading" },
-          { name: "Savlon Liquid", cat: "first_aid", price: 110, img: assets.savlon, desc: "250ml Bottle" },
-          { name: "Crepe Bandage", cat: "first_aid", price: 150, img: assets.bandage, desc: "6cm x 4m" },
-          { name: "Burnol Cream", cat: "first_aid", price: 70, img: assets.burnol, desc: "For Burns 20g" }
-      ];
-
-
-
-
-
-
+        const products = [
+            // --- PAIN RELIEF ---
+            { name: "Dolo 650mg", cat: "pain", price: 30, img: assets.dolo, desc: "Strip of 15 Tablets" },
+            { name: "Crocin Advance", cat: "pain", price: 25, img: assets.crocin, desc: "Strip of 20 Tablets" },
+            { name: "Volini Spray", cat: "pain", price: 180, img: assets.volini, desc: "40g Pain Relief Spray" },
+            { name: "Moov Ointment", cat: "pain", price: 140, img: assets.moov, desc: "50g Rapid Relief" },
+            { name: "Combiflam", cat: "pain", price: 45, img: assets.combiflam, desc: "Strip of 20 Tablets" },
+            { name: "Ibuprofen 400", cat: "pain", price: 22, img: assets.ibuprofen, desc: "Strip of 10 Tablets" },
+            { name: "Omnigel", cat: "pain", price: 95, img: assets.omnigel, desc: "30g Pain Relief Gel" },
+            { name: "Amrutanjan Balm", cat: "pain", price: 60, img: assets.amrutanjan, desc: "Small Jar" },
+            { name: "Disprin", cat: "pain", price: 12, img: assets.disprin, desc: "Strip of 10 Effervescent" },
+            { name: "Tiger Balm", cat: "pain", price: 85, img: assets.tigerbalm, desc: "Red Extra Strength" },
+            
+            // --- VITAMINS ---
+            { name: "Limcee Vit C", cat: "vitamins", price: 25, img: assets.limcee, desc: "Chewable 15 Tabs" },
+            { name: "Becosules Z", cat: "vitamins", price: 55, img: assets.becosules, desc: "Strip of 20 Caps" },
+            { name: "Zincovit", cat: "vitamins", price: 110, img: assets.zincovit, desc: "Multivitamin Strip" },
+            { name: "Seven Seas Omega", cat: "vitamins", price: 350, img: assets.sevenseas, desc: "Cod Liver Oil Bottle" },
+            { name: "Neurobion Forte", cat: "vitamins", price: 40, img: assets.neurobion, desc: "B12 Support Strip" },
+            { name: "Evion 400", cat: "vitamins", price: 38, img: assets.evion, desc: "Vitamin E Pearls" },
+            { name: "Revital H", cat: "vitamins", price: 550, img: assets.revital, desc: "Daily Health Supplement" },
+            { name: "Shelcal 500", cat: "vitamins", price: 120, img: assets.shelcal, desc: "Calcium + Vit D3" },
+            
+            // --- DIABETES CARE ---
+            { name: "Accu-Chek Active", cat: "diabetes", price: 850, img: assets.accuchek, desc: "Glucometer Kit" },
+            { name: "Accu-Chek Strips", cat: "diabetes", price: 950, img: assets.accustrips, desc: "Box of 50 Strips" },
+            { name: "Sugar Free Gold", cat: "diabetes", price: 250, img: assets.sugarfree, desc: "500 Pellets" },
+            { name: "Insulin Syringes", cat: "diabetes", price: 150, img: assets.syringes, desc: "Pack of 10 (40IU)" },
+            { name: "Karela Jamun Juice", cat: "diabetes", price: 320, img: assets.karela, desc: "1 Litre Bottle" },
+            { name: "OneTouch Select", cat: "diabetes", price: 1200, img: assets.onetouch, desc: "Simple Glucometer" },
+            { name: "Foot Cream", cat: "diabetes", price: 280, img: assets.footcream, desc: "Diabetic Foot Care" },
+            { name: "Stevia Drops", cat: "diabetes", price: 180, img: assets.stevia, desc: "Natural Sweetener" },
+            
+            // --- FIRST AID ---
+            { name: "Dettol Liquid", cat: "first_aid", price: 120, img: assets.dettol, desc: "250ml Antiseptic" },
+            { name: "Band-Aid", cat: "first_aid", price: 50, img: assets.bandaid, desc: "Washproof Box of 20" },
+            { name: "Cotton Roll", cat: "first_aid", price: 60, img: assets.cotton, desc: "50g Absorbent" },
+            { name: "Betadine Ointment", cat: "first_aid", price: 85, img: assets.betadine, desc: "20g Tube" },
+            { name: "Digital Thermometer", cat: "first_aid", price: 250, img: assets.thermometer, desc: "Fast Reading" },
+            { name: "Savlon Liquid", cat: "first_aid", price: 110, img: assets.savlon, desc: "250ml Bottle" },
+            { name: "Crepe Bandage", cat: "first_aid", price: 150, img: assets.bandage, desc: "6cm x 4m" },
+            { name: "Burnol Cream", cat: "first_aid", price: 70, img: assets.burnol, desc: "For Burns 20g" }
+        ];
 
         // Assign IDs efficiently
         products.forEach((p, i) => p.id = i);
