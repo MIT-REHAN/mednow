@@ -1019,11 +1019,11 @@
 
         // --- API KEY HANDLING ---
        // Put your Gemini API Key here ↓
-let apiKey = "PUT-YOUR-GEMINI-API-KEY-HERE";
+let apiKey = "AIzaSyD43Is-jLIO-yVWBpNhTY0BaAe_jlHXo9s";
 
 
 // LocalStorage key name (should NOT be API key name)
-const STORAGE_KEY = "gemini_api_key";
+const STORAGE_KEY = "AIzaSyD43Is-jLIO-yVWBpNhTY0BaAe_jlHXo9s";
 
 
 function checkApiKey() {
@@ -1043,7 +1043,7 @@ function checkApiKey() {
 
 // Change key manually when needed
 function changeApiKey() {
-   const newKey = prompt("Enter New Gemini API Key:", apiKey);
+   const newKey = prompt("AIzaSyD43Is-jLIO-yVWBpNhTY0BaAe_jlHXo9s", apiKey);
    if (newKey) {
        apiKey = newKey;
        localStorage.setItem(STORAGE_KEY, newKey);
